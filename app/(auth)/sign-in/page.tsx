@@ -28,7 +28,7 @@ const SignIn = () => {
 
   return (
     <>
-      <h2 className="form-title">Login In Your Account</h2>
+      <h2 className="form-title">Log in Your Account</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <InputField
           name="email"
@@ -38,8 +38,10 @@ const SignIn = () => {
           error={errors.email}
           validation={{
             required: "Email is required",
-            pattern: /^\S+@\S+$/,
-            message: "Invalid email address",
+            pattern: {
+              value: /^\S+@\S+$/,
+              message: "Invalid email address",
+            },
           }}
         />
         <InputField
@@ -51,7 +53,11 @@ const SignIn = () => {
           error={errors.password}
           validation={{ required: "Password is required", minLength: 8 }}
         />
-        <Button type="submit" className="yellow-btn w-full mt-5" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          className="yellow-btn w-full mt-5"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? "Logging in" : "Login"}
         </Button>
         <p className="text-sm text-gray-400 text-center">

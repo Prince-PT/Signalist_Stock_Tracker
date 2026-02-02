@@ -9,7 +9,6 @@ import {
   PREFERRED_INDUSTRIES,
   RISK_TOLERANCE_OPTIONS,
 } from "@/lib/constants";
-import { Select } from "@radix-ui/react-select";
 import { useForm } from "react-hook-form";
 
 const SignUp = () => {
@@ -23,7 +22,7 @@ const SignUp = () => {
       fullName: "",
       email: "",
       password: "",
-      country: "India",
+      country: "IN",
       investmentGoals: "Growth",
       riskTolerance: "Medium",
       preferredIndustry: "Technology",
