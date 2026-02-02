@@ -2,10 +2,15 @@
 
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
+import { router } from "better-auth/api";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignIn = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -20,9 +25,15 @@ const SignIn = () => {
 
   const onSubmit = async (data: SignInFormData) => {
     try {
-      console.log("Sign-in data:", data);
+      const result = await signInWithEmail(data);
+      if(result.success){
+        router.push('/')
+      }
     } catch (error) {
       console.error("Sign-in error:", error);
+      toast.error('Sign in failed', {
+        description: error instanceof Error ? error.message : 'Failed to sign in'
+      });
     }
   };
 
