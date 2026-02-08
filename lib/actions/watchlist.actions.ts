@@ -25,7 +25,7 @@ export const getWatchlistSymbolsByEmail = async (email: string): Promise<string[
 
         // If user not found, return empty array
         if (!user) {
-            console.log(`No user found with email: ${email}`);
+            console.log('No user found for provided email.');
             return [];
         }
 

@@ -29,7 +29,7 @@ export const sendNewsSummaryEmail = async (email: string, date: string, newsCont
         .replace('{{newsContent}}', newsContent);
 
     const mailOptions = {
-        from: '"Signalist News" <thakkarprince100@gmail.com>',
+        from: `"Signalist News" <${process.env.NODEMAILER_USER}>`,
         to: email,
         subject: `Market News Summary Today - ${date}`,
         text: "Today's market news summary from Signalist",

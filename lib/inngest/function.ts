@@ -74,6 +74,8 @@ export const sendDailyNewsSummary = inngest.createFunction(
                 news: MarketNewsArticle[];
             }> = [];
 
+            let generalNews: MarketNewsArticle[] | null = null;
+
             for (const user of users) {
                 try {
                     // Get user's watchlist symbols
@@ -81,10 +83,16 @@ export const sendDailyNewsSummary = inngest.createFunction(
                     
                     // Fetch news (up to 6 articles)
                     // If user has watchlist symbols, fetch personalized news
-                    // Otherwise fetch general market news
-                    const news = symbols.length > 0 
-                        ? await getNews(symbols)
-                        : await getNews();
+                    // Otherwise fetch general market news (cached after first call)
+                    let news: MarketNewsArticle[];
+                    if (symbols.length > 0) {
+                        news = await getNews(symbols);
+                    } else {
+                        if (generalNews === null) {
+                            generalNews = await getNews();
+                        }
+                        news = generalNews;
+                    }
 
                     userNewsData.push({
                         user,
@@ -92,7 +100,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
                         news,
                     });
                 } catch (error) {
-                    console.error(`Error fetching news for user ${user.email}:`, error);
+                       console.error(`Error fetching news for userId=${user.id}:`, error);
                     // Continue with next user
                     continue;
                 }
@@ -133,7 +141,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
 
                 return await sendNewsSummaryEmail(
                     user.email,
-                    formatDateToday,
+                    formatDateToday(),
                     newsContent
                 );
             }));
