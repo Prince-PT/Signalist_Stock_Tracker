@@ -24,6 +24,12 @@
 
 ---
 
+# Deployed Project Link
+
+https://signalist-stock-tracker-zeta.vercel.app/
+
+---
+
 ## 📋 Table of Contents
 
 - [📸 Preview](#-preview)
