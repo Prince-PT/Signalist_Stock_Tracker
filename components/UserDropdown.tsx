@@ -18,14 +18,19 @@ import Navitems from "./NavItems";
 import NavItems from "./NavItems";
 import { signOut } from "@/lib/actions/auth.actions";
 
-const UserDropdown = ({user , initialStocks}: {user: User, initialStocks: StockWithWatchlistStatus[]}) => {
+const UserDropdown = ({
+  user,
+  initialStocks,
+}: {
+  user: User;
+  initialStocks: StockWithWatchlistStatus[];
+}) => {
   const router = useRouter();
 
   const handleSignOut = async () => {
     await signOut();
     router.push("/sign-in");
   };
-
 
   return (
     <DropdownMenu>
@@ -44,7 +49,6 @@ const UserDropdown = ({user , initialStocks}: {user: User, initialStocks: StockW
             <span className="text-base font-medium text-gray-400">
               {user.name}
             </span>
-            
           </div>
         </Button>
       </DropdownMenuTrigger>
@@ -75,7 +79,7 @@ const UserDropdown = ({user , initialStocks}: {user: User, initialStocks: StockW
         </DropdownMenuItem>
         <DropdownMenuSeparator className=" hidden sm:block bg-gray-600 " />
         <nav className="sm:hidden">
-          <NavItems initialStocks={initialStocks} />
+          <NavItems initialStocks={initialStocks} userEmail={user.email} />
         </nav>
       </DropdownMenuContent>
     </DropdownMenu>

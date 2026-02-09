@@ -199,3 +199,17 @@ export async function searchStocks(query?: string): Promise<StockWithWatchlistSt
         isInWatchlist: false,
     }));
 }
+
+/**
+ * Get the company name for a given stock symbol
+ */
+export async function getCompanyName(symbol: string): Promise<string> {
+    if (!FINNHUB_API_KEY) return symbol;
+    try {
+        const url = `${FINNHUB_BASE_URL}/stock/profile2?symbol=${encodeURIComponent(symbol)}&token=${FINNHUB_API_KEY}`;
+        const profile = await fetchJSON<{ name?: string }>(url, 3600);
+        return profile.name || symbol;
+    } catch {
+        return symbol;
+    }
+}
