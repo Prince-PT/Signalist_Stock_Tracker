@@ -4,8 +4,15 @@ import { NAV_ITEMS } from "@/lib/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SearchCommand from "./SearchCommand";
+import WatchlistDropdown from "./WatchlistDropdown";
 
-const NavItems = ({ initialStocks }: { initialStocks: StockWithWatchlistStatus[] }) => {
+const NavItems = ({
+  initialStocks,
+  userEmail,
+}: {
+  initialStocks: StockWithWatchlistStatus[];
+  userEmail: string;
+}) => {
   const pathname = usePathname();
 
   const isActive = (path: string) => {
@@ -22,7 +29,14 @@ const NavItems = ({ initialStocks }: { initialStocks: StockWithWatchlistStatus[]
                 renderAs="text"
                 label="Search"
                 initialStocks={initialStocks}
+                userEmail={userEmail}
               />
+            </li>
+          );
+        if (label === "Watchlist")
+          return (
+            <li key="watchlist-trigger">
+              <WatchlistDropdown userEmail={userEmail} />
             </li>
           );
         return (
